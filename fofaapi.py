@@ -39,6 +39,6 @@ def FofaAPICall(query, email, api_key):
 if __name__=="__main__":
     FofaAPICall(
             query = sys.argv[1],
-            email=None,
-            api_key=None
+            email = None,
+            api_key = None
             )
