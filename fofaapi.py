@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 import requests
 import base64
 import sys
@@ -15,29 +16,41 @@ def FofaAPICall(query, email, api_key):
 
     try:
         results = response.json().get("results",list())
-        print("\033[38;2;24;254;27m[ {} ]\033[0m Fofa API Search {} Results.".format(query, len(results)))
 
     except Exception as error :
         print(error)
         return list()
 
     hosts = list()
-    file_name = "{}.csv".format(query.replace(" ","_"))
+    file_name = "FofaResults.csv"
     urls_file = open("urlresults.txt","w")
 
     with open(file_name,"a") as results_file:
+        print(f"Output File: {file_name}")
         results_file.write(fields+"\n")
 
         for result in results:
             url = result[0].strip() + '://' +  result[1].strip() if '://' not in result[1] else result[1].strip()
             print(",".join(result))
             hosts.append( url )
-            urls_file.write( url+'\n' )
             results_file.write( ",".join(result)+'\n' )
 
+        print("\033[38;2;24;254;27m[ {} ]\033[0m Fofa API Search {} Results.".format(query, len(results)))
+
+        hosts = ResultsFilter(hosts)
+        for url in hosts:
+            urls_file.write( url+'\n' )
         urls_file.close()
 
+        print("Filter {} Results.".format(len(hosts)))
+
     return hosts
+
+def ResultsFilter(results):
+    Temp = list()
+    results = list(set(results))
+    print("Unique data {} Results.".format(len(results)))
+    return results
 
 if __name__=="__main__":
     FofaAPICall(
