@@ -4,7 +4,7 @@ import base64
 import sys
 
 def FofaAPICall(query, email, api_key):
-    fields = ['protocol','host','ip','port','country_name','title','icp','country']
+    fields = ['protocol','host','ip','port','country_name','title','icp','country','country_name','region','as_organization']
     fields = ",".join(fields)
     qbase64 = base64.b64encode(query.encode()).decode()
     api = f'https://fofa.info/api/v1/search/all?email={email}&key={api_key}&qbase64={qbase64}&size=10000&fields={fields}'
