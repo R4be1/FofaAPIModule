@@ -23,10 +23,10 @@ def FofaAPICall(query, email, api_key):
 
     hosts = list()
     file_name = "FofaResults.csv"
-    urls_file = open("urlresults.txt","w")
+    urls_file = open("urlresults.txt", "w", encoding="utf-8")
 
-    with open(file_name,"a") as results_file:
-        print(f"Output File: {file_name}")
+    with open(file_name, "a", encoding="utf-8") as results_file:
+        print( f"Output File: {file_name}" )
         results_file.write(fields+"\n")
 
         for result in results:
